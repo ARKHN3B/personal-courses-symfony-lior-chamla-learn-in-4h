@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Création d'un article</h1>
+    {# Utilisation de la méthode form() sous Twig pour rendre notre objet "affichage" formulaire #}
+    {# Par défaut, Twig avec Symfony est capable d'interpréter le type d'entrée utilisateur selon le type de la colonne de l'entité #}
+    {#
+        {{ form(formArticle) }}
+    #}
+
+    {# PERSONNALISER UN FORMULAIRE #}
+    {# Utilisation de la méthode form_start() sous Twig pour rendre la balise HTML form avec la bonne action, la bonne méthode, etc #}
+    {# Par défaut, le formulaire envoie les données sur la même route #}
+    {{ form_start(formArticle) }}
+    <div class="form-group">
+        <label>Titre de l'article :</label>
+        {# La méthode form_widget() permet de rendre un champ spécifique #}
+        {{ form_widget(formArticle.title, { "attr": { "class": "form-control" } }) }}
+    </div>
+
+    {#
+        Important :
+        Le mieux est d'utiliser la méthode form_row dans un template Twig afin de laisser un contrôleur le plus propre et le plus simple possible.
+    #}
+    {{
+        form_row(formArticle.content, {
+            "attr": {
+                "placeholder": "Titre de l'article",
+                "class": "form-control"
+            },
+            "label": "Contenu de l'article :"
+        })
+    }}
+
+    <div class="form-group">
+        <label>Image de l'article :</label>
+        {{ form_widget(formArticle.image) }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Ajouter l'article</button>
+    {{ form_end(formArticle) }}
+    {#
+        Attention !
+        Si aucun autre champ n'est géré manuellement, Twig couplé à Symfony se chargera de le générer automatiquement
+        en dehors de ces balises d'action Twig
+    #}
+    {#
+        Le mieux est d'utiliser la méthode form_row dans un template Twig afin de laisser un contrôleur propre et simple.
+    #}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article>
+        <h2>{{ article.title }}</h2>
+        <div class="metadata">Écrit le {{ article.createdAt.format("d/m/Y à H:i") }} dans la
+            catégorie {{ article.category.title }}</div>
+        <div class="content">
+            <img src="{{ article.image }}">
+            <p>{{ article.content }}</p>
+            <hr>
+            <p>
+                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut culpa eligendi excepturi exercitationem fugit ipsum iusto minus omnis pariatur perferendis placeat possimus praesentium quaerat quam sed, soluta sunt voluptas voluptatum.</span><span>Consequuntur deleniti error expedita minima unde! Accusantium alias consequuntur culpa cupiditate dignissimos, ducimus ea enim fugiat itaque maxime modi nam neque, nisi nulla placeat provident quam soluta ullam, voluptas voluptatum.</span><span>Ad aperiam at facilis magnam, maxime rem sed tempora velit. Aliquid, dignissimos, error exercitationem facilis fuga id natus obcaecati optio quasi quis, rerum tempora voluptate. Accusantium, dignissimos, ipsa. Possimus, rerum!</span><span>A asperiores corporis debitis dolore doloremque doloribus, enim, id illum labore modi molestiae pariatur quaerat saepe? At dicta est illum nemo repellendus. Aperiam atque corporis exercitationem inventore iste laudantium optio!</span><span>Accusamus, at commodi cumque debitis error esse et explicabo facere, fugit harum in iste molestias nemo non numquam obcaecati officiis quam quasi qui recusandae reiciendis reprehenderit sint voluptate. Nulla, pariatur.</span>
+            </p>
+            <p>
+                <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aliquid delectus, doloremque dolores doloribus dolorum eaque esse ex harum ipsum molestias mollitia nihil non, numquam quisquam quos ratione reprehenderit sunt?</span><span>A alias, consectetur ducimus esse et illum, iure magnam mollitia nihil, omnis quas quibusdam quisquam rem repellendus saepe sit unde voluptate. Animi corporis deserunt fugit ipsam pariatur porro rerum voluptatem?</span><span>Ab aperiam culpa dolores error esse expedita illum, incidunt iusto quos sequi, similique sunt. Alias aliquid, aperiam cum dolor dolores, eaque eum molestias neque nisi quaerat quisquam voluptate voluptatem voluptates?</span><span>At consectetur dolorem doloremque dolores enim et expedita explicabo facere ipsa, nam repudiandae sapiente. Modi quos, suscipit. Amet, itaque laboriosam libero quod sequi ut. Blanditiis dolorem esse ex magnam repellendus.</span><span>Accusamus alias corporis culpa, debitis delectus dicta dolor doloremque est eveniet harum in minima neque numquam placeat possimus, quas sed sint sit, totam voluptatem? Dignissimos ducimus eaque et officiis velit.</span>
+            </p>
+    </article>
+
+    <section id="comments">
+        {# Aussi simple que ça pour implémenter les commentaires qui sont liés à l'entité Article #}
+        {% for comment in article.comments %}
+            <div class="comment">
+                <div class="row">
+                    <div class="col-3">
+                        {{ comment.author }} (<small>{{ comment.createdAt | date("d/m/Y à H:i") }}</small>)
+                    </div>
+                    <div class="col">
+                        {{ comment.content }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
