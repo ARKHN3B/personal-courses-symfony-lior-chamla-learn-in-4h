@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>S'inscrire</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.email, {
+        "attr": {
+            "placeholder": "exemple@outlook.fr",
+            "class": "form-control"
+        },
+        "label": "Votre adresse e-mail :"
+    }) }}
+    {{ form_row(form.username, {
+        "attr": {
+            "placeholder": "Jean1234",
+            "class": "form-control"
+        },
+        "label": "Votre pseudo :"
+    }) }}
+    {{ form_row(form.password, {
+        "attr": {
+            "placeholder": "Votre mot de passe super secret",
+            "class": "form-control"
+        },
+        "label": "Votre mot de passe :"
+    }) }}
+    {{ form_row(form.confirm_password, {
+        "attr": {
+            "placeholder": "Votre mot de passe super secret encore une fois",
+            "class": "form-control"
+        },
+        "label": "Confirmer votre mot de passe :"
+    }) }}
+    <button type="submit" class="btn btn-primary">
+        S'inscrire
+    </button>
+    {{ form_end(form) }}
+{% endblock body %}

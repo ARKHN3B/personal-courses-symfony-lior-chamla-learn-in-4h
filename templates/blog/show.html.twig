@@ -18,6 +18,7 @@
     </article>
 
     <section id="comments">
+        <h5>{{ article.comments | length }} commentaires :</h5>
         {# Aussi simple que ça pour implémenter les commentaires qui sont liés à l'entité Article #}
         {% for comment in article.comments %}
             <div class="comment">
@@ -31,5 +32,14 @@
                 </div>
             </div>
         {% endfor %}
+        {% if not app.user %}
+           Pour laisser un commentaire, veuillez vous connecter.
+        {% else %}
+            <h5>Laisser un commentaire :</h5>
+            {{ form_start(commentForm) }}
+            {{ form_widget(commentForm) }}
+            <button type="submit">Commenter</button>
+            {{ form_end(commentForm) }}
+        {% endif %}
     </section>
 {% endblock %}

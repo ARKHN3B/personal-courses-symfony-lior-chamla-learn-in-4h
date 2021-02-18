@@ -1,7 +1,20 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    # Les encodeurs vont nous permettre de sécuriser notre application et les mots de passes associés
+    encoders:
+        # Utilisé sur l'entité User
+        App\Entity\User:
+            # Utilisation d'un algorithme spécifique
+            algorithm: auto
+    # D'où viennent les utilisateurs (cf. https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers)
     providers:
         users_in_memory: { memory: null }
+        # On crée un provider spécifique avec le nom que l'on souhaite
+        users_in_database:
+            # Ce provider se base sur une entité par laquelle Symfony va comprendre où chercher et comparer
+            entity:
+                class: App\Entity\User
+                # On donne une propriété par laquelle on va aller chercher des utilisateurs
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -9,13 +22,28 @@ security:
         main:
             anonymous: true
             lazy: true
-            provider: users_in_memory
+            provider: users_in_database
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+            # On active la possibilité de se connecter de différente façon :
+            # Cf. https://symfony.com/doc/current/security.html#firewalls-authentication
+            # Ici, on spécifie que le mode d'authentificaton se fera par un formulaire de connexion
+            form_login:
+                # On donne la route vers le formulaire de connexion
+                login_path: login
+                # Le check_path est l'endroit appeler pour vérifier les informations de connexion,
+                # et ce même si aucune vérification n'est faite dans la route, grâce aux champs
+                # avec les noms _username et _password.
+                check_path: login
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+
+            # On active la déconnexion
+            logout:
+                # On donne la route de déconnexion
+                path: logout
+                # On donne la route de redirection
+                target: blog
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

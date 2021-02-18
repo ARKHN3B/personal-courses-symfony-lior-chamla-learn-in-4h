@@ -21,6 +21,19 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('blog_create') }}">Créer un article</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('registration') }}">Inscription</a>
+            </li>
+            {# La variable app est une super variable qui contient tout un tas d'informations sur notre application #}
+            {% if not app.user %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('login') }}">Connexion</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

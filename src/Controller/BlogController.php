@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -147,11 +149,26 @@ class BlogController extends AbstractController {
    * @return Response
    */
   // public function show(ArticleRepository $repo, $id): Response {
-  public function show(Article $article): Response { // ParamConverter est capable d'aller chercher l'article avec le champs (ici id)
+  public function show(Article $article, Request $request, EntityManagerInterface $manager): Response { // ParamConverter est capable d'aller chercher l'article avec le champs (ici id)
     // $article = $repo->find($id);
+    $comment = new Comment();
+    $form = $this->createForm(CommentType::class, $comment);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $comment->setCreatedAt(new \DateTime());
+      $comment->setArticle($article);
+      $manager->persist($comment);
+      $manager->flush();
+
+      $this->redirectToRoute("blog_show", ["id" => $article->getId()]);
+    }
+
     return $this->render("blog/show.html.twig",
                          [
                            "article" => $article,
+                           "commentForm" => $form->createView()
                          ]);
   }
 }
